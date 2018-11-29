@@ -72,6 +72,7 @@ double scale_factor (Pos* pos, double* eg) {
     double bishopValueMg = 828;
     double bishopValueEg = 916;
     double rookValueMg = 1286;
+
     if (pc_w == 0 && npm_w - npm_b <= bishopValueMg) sf = npm_w < rookValueMg ? 0 : npm_b <= bishopValueMg ? 4 : 14;
     if (sf == 64) {
         double ob = opposite_bishops(pos,NULL);
