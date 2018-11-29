@@ -2,7 +2,19 @@
 #include <stdlib.h>
 
 #include "global.h"
+#include "eval.h"
+#include "attack.h"
+#include "helpers.h"
 #include "imbalance.h"
+#include "initiative.h"
+#include "king.h"
+#include "material.h"
+#include "mobility.h"
+#include "passed_pawns.h"
+#include "pawns.h"
+#include "pieces.h"
+#include "space.h"
+#include "threats.h"
 
 double imbalance (Pos* pos, Square* square, void* param) {
     if (square == NULL) {
@@ -49,7 +61,7 @@ double imbalance (Pos* pos, Square* square, void* param) {
 }
 
 double bishop_pair (Pos* pos) {
-    if (bishop_count(pos) > 1) {
+    if (bishop_count(pos,NULL,NULL) > 1) {
         return 1438;
     }
     return 0;

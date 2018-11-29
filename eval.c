@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <ctype.h>
 
 #include "global.h"
 #include "eval.h"
-
 #include "attack.h"
 #include "helpers.h"
 #include "imbalance.h"

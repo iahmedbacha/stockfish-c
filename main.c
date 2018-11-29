@@ -1,9 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <ctype.h>
 
 #include "global.h"
 #include "eval.h"
+#include "attack.h"
+#include "helpers.h"
 #include "imbalance.h"
+#include "initiative.h"
+#include "king.h"
+#include "material.h"
+#include "mobility.h"
+#include "passed_pawns.h"
+#include "pawns.h"
+#include "pieces.h"
+#include "space.h"
+#include "threats.h"
 
 int main() {
     Pos pos;
@@ -32,6 +45,6 @@ int main() {
     pos.m[0] = 0;
     pos.m[1] = 1;
     printf("main_evaluation = %.2f\n", main_evaluation(&pos));
-    printf("imbalance_total = %.2f\n", imbalance_total(&pos,NULL));
+    printf("initiative_total(pos, TRUE) = %.2f\n", initiative_total(&pos, NULL));
     return 0;
 }

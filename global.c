@@ -1,7 +1,22 @@
+#include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <ctype.h>
 
 #include "global.h"
+#include "eval.h"
+#include "attack.h"
+#include "helpers.h"
+#include "imbalance.h"
+#include "initiative.h"
+#include "king.h"
+#include "material.h"
+#include "mobility.h"
+#include "passed_pawns.h"
+#include "pawns.h"
+#include "pieces.h"
+#include "space.h"
+#include "threats.h"
 
 char board (Pos* pos, int x, int y) {
     if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
