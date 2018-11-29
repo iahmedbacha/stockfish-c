@@ -49,3 +49,12 @@ double sum (Pos* pos, double (*func) (Pos* pos, Square* square, void* param), vo
     }
     return sum;
 }
+
+int indexOf (char* str, int length, char ch) {
+    for (int i = 0; i < length; i++) {
+        if (str[i]==ch) {
+            return i;
+        }
+    }
+    return -1;
+}

@@ -3,7 +3,7 @@
 
 #include "global.h"
 #include "eval.h"
-#include "helpers.h"
+#include "imbalance.h"
 
 int main() {
     Pos pos;
@@ -11,7 +11,7 @@ int main() {
         {'r','p','-','-','-','-','P','R'},
         {'n','p','-','-','-','-','P','N'},
         {'b','p','-','-','-','-','P','B'},
-        {'q','p','-','-','-','-','P','Q'},
+        {'q','p','-','-','-','-','-','Q'},
         {'k','p','-','-','-','-','P','K'},
         {'b','p','-','-','-','-','P','B'},
         {'n','p','-','-','-','-','P','N'},
@@ -32,6 +32,6 @@ int main() {
     pos.m[0] = 0;
     pos.m[1] = 1;
     printf("main_evaluation = %.2f\n", main_evaluation(&pos));
-    printf("pawn_count = %.2f\n", pawn_count(&pos,NULL,NULL));
+    printf("imbalance_total = %.2f\n", imbalance_total(&pos,NULL));
     return 0;
 }

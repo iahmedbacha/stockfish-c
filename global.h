@@ -23,4 +23,6 @@ char board (Pos* pos, int x, int y);
 Pos* colorflip (Pos* pos);
 double sum (Pos* pos, double (*func) (Pos* pos, Square* square, void* param), void* param);
 
+int indexOf (char* str, int length, char ch);
+
 #endif // GLOBAL_H_INCLUDED
