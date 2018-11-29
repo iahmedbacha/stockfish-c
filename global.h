@@ -3,6 +3,8 @@
 
 #define TRUE 1
 #define FALSE 0
+#define max(a,b) (a>b)?a:b
+#define min(a,b) (a<b)?a:b
 
 typedef struct {
     char b[8][8]; // chessboard

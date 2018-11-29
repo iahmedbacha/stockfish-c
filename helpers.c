@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "global.h"
 #include "helpers.h"
@@ -90,10 +91,30 @@ double opposite_bishops (Pos* pos, Square* square) {
 }
 
 double king_distance (Pos* pos, Square* square, void* param) {
+    if (square == NULL) {
+        return sum(pos, king_distance,NULL);
+    }
+    for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < 8; y++) {
+            if (board(pos, x, y) == 'K') {
+                return max(fabs(x - square->x),fabs(y - square->y));
+            }
+        }
+    }
     return 0;
 }
 
 double king_ring (Pos* pos, Square* square, void* param) {
+    if (square == NULL) {
+        return sum(pos, king_ring,NULL);
+    }
+    for (int ix = -2; ix <= 2; ix++) {
+        for (int iy = -2; iy <= 1; iy++) {
+            if (board(pos, square->x + ix, square->y + iy) == 'k' && (iy >= -1 || square->y + iy == 0) && (ix >= -1 && ix <= 1 || square->x + ix == 0 || square->x + ix == 7)) {
+                return 1;
+            }
+        }
+    }
     return 0;
 }
 
