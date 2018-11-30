@@ -34,7 +34,7 @@ double middle_game_evaluation (Pos* pos) {
     v += pawns_mg(pos,NULL,NULL) - pawns_mg(colorflip(pos),NULL,NULL);
     v += pieces_mg(pos,NULL,NULL) - pieces_mg(colorflip(pos),NULL,NULL);
     v += mobility_mg(pos,NULL,NULL) - mobility_mg(colorflip(pos),NULL,NULL);
-    v += threats_mg(pos,NULL,NULL) - threats_mg(colorflip(pos),NULL,NULL);
+    v += threats_mg(pos) - threats_mg(colorflip(pos));
     v += passed_mg(pos,NULL,NULL) - passed_mg(colorflip(pos),NULL,NULL);
     v += space(pos,NULL) - space(colorflip(pos),NULL);
     v += king_mg(pos) - king_mg(colorflip(pos));
@@ -49,7 +49,7 @@ double end_game_evaluation (Pos* pos, int* noinitiative) {
     v += pawns_eg(pos,NULL,NULL) - pawns_eg(colorflip(pos),NULL,NULL);
     v += pieces_eg(pos,NULL,NULL) - pieces_eg(colorflip(pos),NULL,NULL);
     v += mobility_eg(pos,NULL,NULL) - mobility_eg(colorflip(pos),NULL,NULL);
-    v += threats_eg(pos,NULL,NULL) - threats_eg(colorflip(pos),NULL,NULL);
+    v += threats_eg(pos) - threats_eg(colorflip(pos));
     v += passed_eg(pos,NULL,NULL) - passed_eg(colorflip(pos),NULL,NULL);
     v += king_eg(pos) - king_eg(colorflip(pos));
     if (noinitiative==NULL || !*noinitiative) {

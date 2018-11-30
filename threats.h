@@ -14,7 +14,7 @@ double weak_unopposed_pawn (Pos* pos, Square* square, void* param);
 double overload (Pos* pos, Square* square, void* param);
 double slider_on_queen (Pos* pos, Square* square, void* param);
 double knight_on_queen (Pos* pos, Square* square, void* param);
-double threats_mg (Pos* pos, Square* square, void* param);
-double threats_eg (Pos* pos, Square* square, void* param);
+double threats_mg (Pos* pos);
+double threats_eg (Pos* pos);
 
 #endif // THREATS_H_INCLUDED
