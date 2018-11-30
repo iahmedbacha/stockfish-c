@@ -8,5 +8,4 @@ double scale_factor (Pos* pos, double* eg);
 double phase (Pos* pos);
 double tempo (Pos* pos, Square* square);
 
-
 #endif // EVAL_H_INCLUDED

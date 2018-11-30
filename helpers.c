@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <ctype.h>
 #include "global.h"
 #include "eval.h"
 #include "attack.h"
@@ -19,21 +19,21 @@
 
 double rank (Pos* pos, Square* square, void* param) {
     if (square==NULL) {
-        return sum(pos,&rank,NULL);
+        return sum(pos, rank, NULL);
     }
     return 8-square->y;
 }
 
 double file (Pos* pos, Square* square, void* param) {
     if (square==NULL) {
-        return sum(pos,&file,NULL);
+        return sum(pos, file, NULL);
     }
     return 1+square->x;
 }
 
 double bishop_count (Pos* pos, Square* square, void* param) {
     if (square==NULL) {
-        return sum(pos,&bishop_count,NULL);
+        return sum(pos, bishop_count, NULL);
     }
     if (board(pos,square->x,square->y)=='B') {
         return 1;
@@ -43,7 +43,7 @@ double bishop_count (Pos* pos, Square* square, void* param) {
 
 double queen_count (Pos* pos, Square* square, void* param) {
     if (square==NULL) {
-        return sum(pos,&queen_count,NULL);
+        return sum(pos, queen_count, NULL);
     }
     if (board(pos,square->x,square->y)=='Q') {
         return 1;
@@ -53,7 +53,7 @@ double queen_count (Pos* pos, Square* square, void* param) {
 
 double pawn_count (Pos* pos, Square* square, void* param) {
     if (square==NULL) {
-        return sum(pos,&pawn_count,NULL);
+        return sum(pos, pawn_count, NULL);
     }
     if (board(pos,square->x,square->y)=='P') {
         return 1;
@@ -63,7 +63,7 @@ double pawn_count (Pos* pos, Square* square, void* param) {
 
 double knight_count (Pos* pos, Square* square, void* param) {
     if (square==NULL) {
-        return sum(pos,&knight_count,NULL);
+        return sum(pos, knight_count, NULL);
     }
     if (board(pos,square->x,square->y)=='N') {
         return 1;
@@ -73,7 +73,7 @@ double knight_count (Pos* pos, Square* square, void* param) {
 
 double rook_count (Pos* pos, Square* square, void* param) {
     if (square==NULL) {
-        return sum(pos,&rook_count,NULL);
+        return sum(pos, rook_count, NULL);
     }
     if (board(pos,square->x,square->y)=='R') {
         return 1;

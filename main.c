@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
-
 #include "global.h"
 #include "eval.h"
 #include "attack.h"
@@ -24,7 +23,7 @@ int main() {
         {'r','p','-','-','-','-','P','R'},
         {'n','p','-','-','-','-','P','N'},
         {'b','p','-','-','-','-','P','B'},
-        {'q','p','-','-','-','-','-','Q'},
+        {'q','p','-','-','-','-','P','Q'},
         {'k','p','-','-','-','-','P','K'},
         {'b','p','-','-','-','-','P','B'},
         {'n','p','-','-','-','-','P','N'},
@@ -45,6 +44,6 @@ int main() {
     pos.m[0] = 0;
     pos.m[1] = 1;
     printf("main_evaluation = %.2f\n", main_evaluation(&pos));
-    printf("initiative_total(pos, TRUE) = %.2f\n", initiative_total(&pos, NULL));
+    printf("pinned(pos, TRUE) = %.2f\n", pinned(&pos, NULL, NULL));
     return 0;
 }
