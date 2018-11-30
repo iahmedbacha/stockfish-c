@@ -44,6 +44,6 @@ int main() {
     pos.m[0] = 0;
     pos.m[1] = 1;
     printf("main_evaluation = %.2f\n", main_evaluation(&pos));
-    printf("pinned(pos, TRUE) = %.2f\n", pinned(&pos, NULL, NULL));
+    printf("mobility_mg(pos, TRUE) = %.2f\n", mobility_mg(&pos, NULL, NULL));
     return 0;
 }
