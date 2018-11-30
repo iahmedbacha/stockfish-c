@@ -43,7 +43,7 @@ int main() {
     pos.w = TRUE;
     pos.m[0] = 0;
     pos.m[1] = 1;
-    //printf("main_evaluation = %.2f\n", main_evaluation(&pos));
-    printf("psqt_mg(pos, TRUE) = %.2f\n", psqt_mg(&pos, NULL, NULL));
+    printf("main_evaluation = %.2f\n", main_evaluation(&pos));
+    printf("pieces_mg(pos, TRUE) = %.2f\n", pieces_mg(&pos, NULL, NULL));
     return 0;
 }
