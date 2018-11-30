@@ -3,8 +3,6 @@
 
 #define TRUE 1
 #define FALSE 0
-#define max(a,b) (a>b)?a:b
-#define min(a,b) (a<b)?a:b
 
 typedef struct {
     char b[8][8]; // chessboard
@@ -24,5 +22,7 @@ Pos* colorflip (Pos* pos);
 double sum (Pos* pos, double (*func) (Pos* pos, Square* square, void* param), void* param);
 
 int indexOf (char* str, int length, char ch);
+double max (double a, double b);
+double min (double a, double b);
 
 #endif // GLOBAL_H_INCLUDED

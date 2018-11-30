@@ -75,10 +75,10 @@ double psqt_bonus (Pos* pos, Square* square, void* param) {
         return 0;
     }
     if (*mg) {
-        return bonus1[i][7 - square->y][min(square->x, 7 - square->x)];
+        return bonus1[i][7 - square->y][(int) min(square->x, 7 - square->x)];
     }
     else {
-        return bonus2[i][7 - square->y][min(square->x, 7 - square->x)];
+        return bonus2[i][7 - square->y][(int) min(square->x, 7 - square->x)];
     }
 }
 
