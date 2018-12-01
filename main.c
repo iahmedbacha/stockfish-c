@@ -20,11 +20,11 @@
 int main() {
     Pos pos;
     char initial[8][8] = {
-        {'r','-','P','-','-','-','-','R'},
-        {'n','-','-','K','-','-','P','N'},
+        {'r','p','-','-','-','-','P','R'},
+        {'n','p','-','-','-','-','P','N'},
         {'b','p','-','-','-','-','P','B'},
         {'q','p','-','-','-','-','P','Q'},
-        {'k','p','-','-','-','-','P','-'},
+        {'-','p','-','-','-','k','P','K'},
         {'b','p','-','-','-','-','P','B'},
         {'n','p','-','-','-','-','P','N'},
         {'r','p','-','-','-','-','P','R'}
@@ -40,10 +40,11 @@ int main() {
     for (int i = 0; i < 2; i++) {
         pos.e[i] = NULL;
     }
-    pos.w = FALSE;
-    pos.m[0] = 1;
-    pos.m[1] = 2;
-    //printf("main_evaluation = %.2f\n", main_evaluation(&pos));
-    printf("king_proximity(pos, TRUE) = %.2f\n", king_proximity(&pos, NULL, NULL));
+    pos.w = TRUE;
+    pos.m[0] = 0;
+    pos.m[1] = 1;
+    double me = main_evaluation(&pos);
+    printf("main_evaluation = %.2f (%.2f)\n", me, me/250);
+    printf("end_game_evaluation(pos, TRUE) = %.2f\n", end_game_evaluation(&pos, NULL));
     return 0;
 }

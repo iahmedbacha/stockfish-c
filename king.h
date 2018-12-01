@@ -4,10 +4,10 @@
 double pawnless_flank (Pos* pos);
 double strength_square (Pos* pos, Square* square, void* param);
 double storm_square (Pos* pos, Square* square, void* param);
-double shelter_strength (Pos* pos);
-double shelter_storm (Pos* pos);
+double shelter_strength (Pos* pos, Square* square);
+double shelter_storm (Pos* pos, Square* square);
 double king_danger (Pos* pos);
-double king_pawn_distance (Pos* pos);
+double king_pawn_distance (Pos* pos, Square* square);
 double close_enemies (Pos* pos, Square* square, void* param);
 double check (Pos* pos, Square* square, void* param);
 double safe_check (Pos* pos, Square* square, void* param);
