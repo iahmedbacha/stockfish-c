@@ -51,7 +51,7 @@ Contributions are always welcome!
 ## TODO
 - Add tests.
 ## Licence
-GNU General Public License v2.0
+GNU General Public License v3.0
 ## Credits
 - The Stockfish engine was developed by Tord Romstad, Marco Costalba, and Joona Kiiski using C++. It is now being developed and maintained by the Stockfish community. Find the project repository here : https://github.com/official-stockfish/Stockfish
-- We used Stockfish evaluation function implemented in javascript and we reimplemented in C. Find it here : https://hxim.github.io/Stockfish-Evaluation-Guide/
+- We used Stockfish evaluation function implemented in javascript and we reimplemented it in C. Find it here : https://hxim.github.io/Stockfish-Evaluation-Guide/
