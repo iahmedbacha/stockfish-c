@@ -34,8 +34,8 @@ double piece_value_bonus (Pos* pos, Square* square, void* param) {
         return sum(pos, piece_value_bonus, param);
     }
     int* mg = (int*) param;
-    int a1[5] = {142, 784, 828, 1286, 2528};
-    int a2[5] = {207, 868, 916, 1378, 2698};
+    int a1[5] = {136, 782, 830, 1289, 2529};
+    int a2[5] = {208, 865, 918, 1378, 2687};
     int i = indexOf("PNBRQ", 5, board(pos, square->x, square->y));
     if (i >= 0) {
         if (*mg) {

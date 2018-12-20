@@ -22,6 +22,10 @@ double main_evaluation (Pos* pos) {
     double eg = end_game_evaluation(pos, NULL);
     double p = phase(pos);
     double t = tempo(pos, NULL);
+    printf("middle_game_evaluation = %.2f\n", mg);
+    printf("end_game_evaluation = %.2f\n", eg);
+    printf("phase = %.2f\n", p);
+    printf("tempo = %.2f\n", t);
     eg = eg * scale_factor(pos, &eg) / 64;
     return (mg * p + eg * (128 - p)) / 128 + t;
 }
@@ -38,6 +42,18 @@ double middle_game_evaluation (Pos* pos) {
     v += passed_mg(pos,NULL,NULL) - passed_mg(colorflip(pos),NULL,NULL);
     v += space(pos,NULL) - space(colorflip(pos),NULL);
     v += king_mg(pos) - king_mg(colorflip(pos));
+
+    printf("piece_value_mg = %.2f\n", piece_value_mg(pos, NULL, NULL));
+    printf("psqt_mg = %.2f\n", psqt_mg(colorflip(pos), NULL, NULL));
+    printf("imbalance_total = %.2f\n", imbalance_total(pos, NULL));
+    printf("pawns_mg = %.2f\n", pawns_mg(pos, NULL, NULL));
+    printf("pieces_mg = %.2f\n", pieces_mg(pos, NULL, NULL));
+    printf("mobility_mg = %.2f\n", mobility_mg(pos, NULL, NULL));
+    printf("threats_mg = %.2f\n", threats_mg(pos));
+    printf("passed_mg = %.2f\n", passed_mg(pos, NULL, NULL));
+    printf("space = %.2f\n", space(pos, NULL));
+    printf("king_mg = %.2f\n", king_mg(pos));
+
     return v;
 }
 
