@@ -43,6 +43,7 @@ double initiative (Pos* pos, Square* square) {
     double bothFlanks = flanks[0] && flanks[1] ? 1 : 0;
     double kingDistance = fabs(kx[0] - kx[1]) - fabs(ky[0] - ky[1]);
     double purePawn = (non_pawn_material(pos, NULL, NULL) + non_pawn_material(pos2, NULL, NULL)) == 0 ? 1 : 0;
+    free(pos2);
     return 8 * asymmetry + 12 * pawns + 12 * kingDistance + 16 * bothFlanks + 48 * purePawn - 118;
 }
 

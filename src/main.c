@@ -26,7 +26,7 @@
 #define MAX +1		// Joueur Maximisant
 #define MIN -1  	// Joueur Minimisant
 
-#define INFINI INT_MAX
+#define INFINI 5
 #define MAXPARTIE 50	// Taille max du tableau Partie
 			// qui sert à vérifier si une conf a déjà été générée
 			// pour ne pas le re-considérer une 2e fois.
@@ -126,6 +126,7 @@ FILE *f;
 
 // compteur de coups effectués
 int num_coup = 0;
+int count = 0;
 
 // profondeur initiale d'exploration préliminaire avant le tri des alternatives
 int h0 = 2;
@@ -193,7 +194,7 @@ int main( int argc, char *argv[] )
    estMax--;
    estMin--;
 
-   hauteur = 4;  	// par défaut on fixe la profondeur d'évaluation à 4
+   hauteur = 1;  	// par défaut on fixe la profondeur d'évaluation à 4
    largeur = +INFINI;	// et la largeur à l'infini (c-a-d le nb d'alternatives à chaque coup)
 
    // sinon on peut les récupérer depuis la ligne de commande
@@ -223,7 +224,7 @@ int main( int argc, char *argv[] )
    num_coup = 0;
 
    // initialise le générateur de nombre aléatoire pour la fonction estim3(...) uniquement
-   srandom( time(NULL) );
+   //srandom( time(NULL) );
 
    printf("Donnez le nom du fichier texte où sera sauvegarder la partie : ");
    scanf(" %s", nomf);
@@ -760,7 +761,7 @@ int estim3( struct config *conf )
 	ScrQte = ( (pionB*2 + cfB*6 + tB*8 + nB*20) - (pionN*2 + cfN*6 + tN*8 + nN*20) );
 	// donc ScrQteMax ==> 76
 
-	Score = (10*ScrQte + random()%10) * 100.0 / (10*76+10);
+	//Score = (10*ScrQte + random()%10) * 100.0 / (10*76+10);
 	// pour les poids des pièces et le facteur multiplicatif voir commentaire dans estim1
 
         if (Score > 98 ) Score = 98;
@@ -901,7 +902,7 @@ int estim7( struct config *conf )
 	Pos pos;
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
-            pos.b[i][j] = conf->mat[7-i][j];
+            pos.b[i][j] = conf->mat[7-j][i];
             switch (pos.b[i][j]) {
                 case 't':
                     pos.b[i][j] = 'R';
@@ -939,6 +940,9 @@ int estim7( struct config *conf )
                 case -'p':
                     pos.b[i][j] = 'p';
                     break;
+                case 0:
+                    pos.b[i][j] = '-';
+                    break;
             }
         }
     }
@@ -946,35 +950,45 @@ int estim7( struct config *conf )
         case 'g':
             pos.c[0] = TRUE;
             pos.c[1] = FALSE;
+            break;
         case 'p':
             pos.c[0] = FALSE;
             pos.c[1] = TRUE;
+            break;
         case 'n':
             pos.c[0] = FALSE;
             pos.c[1] = FALSE;
+            break;
         case 'r':
             pos.c[0] = TRUE;
             pos.c[1] = TRUE;
+            break;
         case 'e':
             pos.c[0] = FALSE;
             pos.c[1] = FALSE;
+            break;
     }
     switch (conf->roqueN) {
         case 'g':
             pos.c[2] = TRUE;
             pos.c[3] = FALSE;
+            break;
         case 'p':
             pos.c[2] = FALSE;
             pos.c[3] = TRUE;
+            break;
         case 'n':
             pos.c[2] = FALSE;
             pos.c[3] = FALSE;
+            break;
         case 'r':
             pos.c[2] = TRUE;
             pos.c[3] = TRUE;
+            break;
         case 'e':
             pos.c[2] = FALSE;
             pos.c[3] = FALSE;
+            break;
     }
     for (int i = 0; i < 2; i++) {
         pos.e[i] = NULL;
@@ -983,8 +997,10 @@ int estim7( struct config *conf )
     pos.m[0] = 0;
     pos.m[1] = num_coup/2 + 1;
 
+    double me = main_evaluation(&pos);
+
 	// et surtout remplacer le return ci-dessous par qlq chose de mieux !!!
-	return main_evaluation(&pos);
+	return me/250;
 
 } // fin de estim7
 

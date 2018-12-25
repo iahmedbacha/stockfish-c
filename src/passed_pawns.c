@@ -154,6 +154,7 @@ double passed_block (Pos* pos, Square* square, void* param) {
         }
     }
     double k = (unsafe == 0 ? 20: unsafe1 == 0 ? 9 : 0) + (defended == square->y ? 6 : defended1 != 0 ? 4 : 0);
+    free(pos2);
     return k * rr;
 }
 

@@ -70,7 +70,9 @@ double bishop_pair (Pos* pos) {
 
 double imbalance_total (Pos* pos, Square* square) {
     double v = 0;
-    v += imbalance(pos, NULL, NULL) - imbalance(colorflip(pos), NULL, NULL);
-    v += bishop_pair(pos) - bishop_pair(colorflip(pos));
+    Pos* colorflippos = colorflip(pos);
+    v += imbalance(pos, NULL, NULL) - imbalance(colorflippos, NULL, NULL);
+    v += bishop_pair(pos) - bishop_pair(colorflippos);
+    free(colorflippos);
     return v / 16;
 }

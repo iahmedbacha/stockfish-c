@@ -22,55 +22,43 @@ double main_evaluation (Pos* pos) {
     double eg = end_game_evaluation(pos, NULL);
     double p = phase(pos);
     double t = tempo(pos, NULL);
-    printf("middle_game_evaluation = %.2f\n", mg);
-    printf("end_game_evaluation = %.2f\n", eg);
-    printf("phase = %.2f\n", p);
-    printf("tempo = %.2f\n", t);
     eg = eg * scale_factor(pos, &eg) / 64;
     return (mg * p + eg * (128 - p)) / 128 + t;
 }
 
 double middle_game_evaluation (Pos* pos) {
     double v = 0;
-    v += piece_value_mg(pos,NULL,NULL) - piece_value_mg(colorflip(pos),NULL,NULL);
-    v += psqt_mg(pos,NULL,NULL) - psqt_mg(colorflip(pos),NULL,NULL);
+    Pos* colorflippos = colorflip(pos);
+    v += piece_value_mg(pos,NULL,NULL) - piece_value_mg(colorflippos,NULL,NULL);
+    v += psqt_mg(pos,NULL,NULL) - psqt_mg(colorflippos,NULL,NULL);
     v += imbalance_total(pos,NULL);
-    v += pawns_mg(pos,NULL,NULL) - pawns_mg(colorflip(pos),NULL,NULL);
-    v += pieces_mg(pos,NULL,NULL) - pieces_mg(colorflip(pos),NULL,NULL);
-    v += mobility_mg(pos,NULL,NULL) - mobility_mg(colorflip(pos),NULL,NULL);
-    v += threats_mg(pos) - threats_mg(colorflip(pos));
-    v += passed_mg(pos,NULL,NULL) - passed_mg(colorflip(pos),NULL,NULL);
-    v += space(pos,NULL) - space(colorflip(pos),NULL);
-    v += king_mg(pos) - king_mg(colorflip(pos));
-
-    printf("piece_value_mg = %.2f\n", piece_value_mg(pos, NULL, NULL));
-    printf("psqt_mg = %.2f\n", psqt_mg(colorflip(pos), NULL, NULL));
-    printf("imbalance_total = %.2f\n", imbalance_total(pos, NULL));
-    printf("pawns_mg = %.2f\n", pawns_mg(pos, NULL, NULL));
-    printf("pieces_mg = %.2f\n", pieces_mg(pos, NULL, NULL));
-    printf("mobility_mg = %.2f\n", mobility_mg(pos, NULL, NULL));
-    printf("threats_mg = %.2f\n", threats_mg(pos));
-    printf("passed_mg = %.2f\n", passed_mg(pos, NULL, NULL));
-    printf("space = %.2f\n", space(pos, NULL));
-    printf("king_mg = %.2f\n", king_mg(pos));
-
+    v += pawns_mg(pos,NULL,NULL) - pawns_mg(colorflippos,NULL,NULL);
+    v += pieces_mg(pos,NULL,NULL) - pieces_mg(colorflippos,NULL,NULL);
+    v += mobility_mg(pos,NULL,NULL) - mobility_mg(colorflippos,NULL,NULL);
+    v += threats_mg(pos) - threats_mg(colorflippos);
+    v += passed_mg(pos,NULL,NULL) - passed_mg(colorflippos,NULL,NULL);
+    v += space(pos,NULL) - space(colorflippos,NULL);
+    v += king_mg(pos) - king_mg(colorflippos);
+    free(colorflippos);
     return v;
 }
 
 double end_game_evaluation (Pos* pos, int* noinitiative) {
     double v = 0;
-    v += piece_value_eg(pos,NULL,NULL) - piece_value_eg(colorflip(pos),NULL,NULL);
-    v += psqt_eg(pos,NULL,NULL) - psqt_eg(colorflip(pos),NULL,NULL);
+    Pos* colorflippos = colorflip(pos);
+    v += piece_value_eg(pos,NULL,NULL) - piece_value_eg(colorflippos,NULL,NULL);
+    v += psqt_eg(pos,NULL,NULL) - psqt_eg(colorflippos,NULL,NULL);
     v += imbalance_total(pos,NULL);
-    v += pawns_eg(pos,NULL,NULL) - pawns_eg(colorflip(pos),NULL,NULL);
-    v += pieces_eg(pos,NULL,NULL) - pieces_eg(colorflip(pos),NULL,NULL);
-    v += mobility_eg(pos,NULL,NULL) - mobility_eg(colorflip(pos),NULL,NULL);
-    v += threats_eg(pos) - threats_eg(colorflip(pos));
-    v += passed_eg(pos,NULL,NULL) - passed_eg(colorflip(pos),NULL,NULL);
-    v += king_eg(pos) - king_eg(colorflip(pos));
+    v += pawns_eg(pos,NULL,NULL) - pawns_eg(colorflippos,NULL,NULL);
+    v += pieces_eg(pos,NULL,NULL) - pieces_eg(colorflippos,NULL,NULL);
+    v += mobility_eg(pos,NULL,NULL) - mobility_eg(colorflippos,NULL,NULL);
+    v += threats_eg(pos) - threats_eg(colorflippos);
+    v += passed_eg(pos,NULL,NULL) - passed_eg(colorflippos,NULL,NULL);
+    v += king_eg(pos) - king_eg(colorflippos);
     if (noinitiative==NULL || !*noinitiative) {
         v += initiative_total(pos, &v);
     }
+    free(colorflippos);
     return v;
 }
 
@@ -78,8 +66,9 @@ double scale_factor (Pos* pos, double* eg) {
     if (eg == NULL) {
         *eg = end_game_evaluation(pos, NULL);
     }
-    Pos* pos_w = *eg > 0 ? pos : colorflip(pos);
-    Pos* pos_b = *eg > 0 ? colorflip(pos) : pos;
+    Pos* colorflippos = colorflip(pos);
+    Pos* pos_w = *eg > 0 ? pos : colorflippos;
+    Pos* pos_b = *eg > 0 ? colorflippos : pos;
     double sf = 64;
     double pc_w = pawn_count(pos_w,NULL,NULL);
     double pc_b = pawn_count(pos_b,NULL,NULL);
@@ -105,7 +94,7 @@ double scale_factor (Pos* pos, double* eg) {
                     asymmetry++;
                 }
             }
-            asymmetry += candidate_passed(pos,NULL,NULL) + candidate_passed(colorflip(pos),NULL,NULL);
+            asymmetry += candidate_passed(pos,NULL,NULL) + candidate_passed(colorflippos,NULL,NULL);
             sf = 8 + 4 * asymmetry;
         }
         else {
@@ -113,15 +102,18 @@ double scale_factor (Pos* pos, double* eg) {
             sf = (sf<temp)?sf:temp;
         }
     }
+    free(colorflippos);
     return sf;
 }
 
 double phase (Pos* pos) {
+    Pos* colorflippos = colorflip(pos);
     double midgameLimit = 15258;
     double endgameLimit = 3915;
-    double npm = non_pawn_material(pos,NULL,NULL) + non_pawn_material(colorflip(pos),NULL,NULL);
+    double npm = non_pawn_material(pos,NULL,NULL) + non_pawn_material(colorflippos,NULL,NULL);
     npm = (npm<midgameLimit)?npm:midgameLimit;
     npm = (endgameLimit>npm)?endgameLimit:npm;
+    free(colorflippos);
     return ((npm - endgameLimit) * 128) / (midgameLimit - endgameLimit);
 }
 
