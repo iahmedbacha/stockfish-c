@@ -26,7 +26,7 @@
 #define MAX +1		// Joueur Maximisant
 #define MIN -1  	// Joueur Minimisant
 
-#define INFINI 5
+#define INFINI INT_MAX
 #define MAXPARTIE 50	// Taille max du tableau Partie
 			// qui sert à vérifier si une conf a déjà été générée
 			// pour ne pas le re-considérer une 2e fois.
@@ -194,7 +194,7 @@ int main( int argc, char *argv[] )
    estMax--;
    estMin--;
 
-   hauteur = 1;  	// par défaut on fixe la profondeur d'évaluation à 4
+   hauteur = 4;  	// par défaut on fixe la profondeur d'évaluation à 4
    largeur = +INFINI;	// et la largeur à l'infini (c-a-d le nb d'alternatives à chaque coup)
 
    // sinon on peut les récupérer depuis la ligne de commande
@@ -257,19 +257,16 @@ int main( int argc, char *argv[] )
 		// 1- on commence donc par une petite exploration de profondeur h0
 		//    pour récupérer des estimations plus précises sur chaque coups:
 	    	for (i=0; i<n; i++)
-		     T[i].val = minmax_ab( &T[i], MIN, h0, -INFINI, +INFINI, largeur, estMax );
+                T[i].val = minmax_ab( &T[i], MIN, h0, -INFINI, +INFINI, largeur, estMax );
 
 		// 2- on réalise le tri des alternatives T suivant les estimations récupérées:
 		qsort(T, n, sizeof(struct config), confcmp321);
 		if ( largeur < n ) n = largeur;
-
 		// 3- on lance l'exploration des alternatives triées avec la profondeur voulue:
 	    	score = -INFINI;
 	    	j = -1;
-
 	    	for (i=0; i<n; i++) {
-		   nbAlpha = nbBeta = 0;
-		   cout = minmax_ab( &T[i], MIN, hauteur, score, +INFINI, largeur, estMax );
+                cout = minmax_ab( &T[i], MIN, hauteur, score, +INFINI, largeur, estMax );
 		   printf("."); fflush(stdout);
 		   // printf(" %4d", cout); fflush(stdout);
 		   if ( cout > score ) {  // Choisir le meilleur coup (c-a-d le plus grand score)
@@ -1000,7 +997,7 @@ int estim7( struct config *conf )
     double me = main_evaluation(&pos);
 
 	// et surtout remplacer le return ci-dessous par qlq chose de mieux !!!
-	return me/250;
+	return (int) me/250;
 
 } // fin de estim7
 

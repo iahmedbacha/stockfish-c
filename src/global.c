@@ -25,30 +25,29 @@ char board (Pos* pos, int x, int y) {
     }
 }
 
-Pos* colorflip (Pos* pos) {
-    Pos* result = (Pos*)(malloc(sizeof(Pos)));
+void colorflip (Pos* pos, Pos* colorflippos) {
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
-            result->b[x][y] = pos->b[x][7-y];
-            int color = toupper(result->b[x][y]) == result->b[x][y];
-            result->b[x][y] = color ? tolower(result->b[x][y]) : toupper(result->b[x][y]);
+            char temp = pos->b[x][7-y];
+            colorflippos->b[x][y] = temp;
+            int color = toupper(colorflippos->b[x][y]) == colorflippos->b[x][y];
+            colorflippos->b[x][y] = color ? tolower(colorflippos->b[x][y]) : toupper(colorflippos->b[x][y]);
         }
     }
-    result->c[0] = pos->c[2];
-    result->c[1] = pos->c[3];
-    result->c[2] = pos->c[0];
-    result->c[3] = pos->c[1];
+    colorflippos->c[0] = pos->c[2];
+    colorflippos->c[1] = pos->c[3];
+    colorflippos->c[2] = pos->c[0];
+    colorflippos->c[3] = pos->c[1];
     if (pos->e==NULL) {
-        result->e==NULL;
+        colorflippos->e==NULL;
     }
     else {
-        result->e[0] = pos->e[0];
-        result->e[1] = 7-pos->e[1];
+        colorflippos->e[0] = pos->e[0];
+        colorflippos->e[1] = 7-pos->e[1];
     }
-    result->w= !pos->w;
-    result->m[0] = pos->m[0];
-    result->m[1] = pos->m[1];
-    return result;
+    colorflippos->w= !pos->w;
+    colorflippos->m[0] = pos->m[0];
+    colorflippos->m[1] = pos->m[1];
 }
 
 double sum (Pos* pos, double (*func) (Pos* pos, Square* square, void* param), void* param) {

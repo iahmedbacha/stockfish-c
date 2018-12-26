@@ -203,9 +203,9 @@ double king_danger (Pos* pos) {
     double pins_uchcks = unsafe_checks(pos, NULL, NULL);
     double tropism = close_enemies(pos, NULL, NULL);
     double noqueen = (queen_count(pos, NULL, NULL) > 0 ? 0 : 1);
-    Pos* colorflippos = colorflip(pos);
-    double v = count * weight + 69 * kingattacks + 185 * weak + 150 * pins_uchcks + (tropism * tropism / 4) - 873 * noqueen - (6 * (shelter_strength(pos, NULL) - shelter_storm(pos, NULL)) / 8) + mobility_mg(pos, NULL, NULL) - mobility_mg(colorflippos, NULL, NULL) - 30 + 780 * (safe_check(pos, NULL, 3) > 0 ? 1 : 0) + 880 * (safe_check(pos, NULL, 2) > 0 ? 1 : 0) + 435 * (safe_check(pos, NULL, 1) > 0 ? 1 : 0) + 790 * (safe_check(pos, NULL, 0) > 0 ? 1 : 0);
-    free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    double v = count * weight + 69 * kingattacks + 185 * weak + 150 * pins_uchcks + (tropism * tropism / 4) - 873 * noqueen - (6 * (shelter_strength(pos, NULL) - shelter_storm(pos, NULL)) / 8) + mobility_mg(pos, NULL, NULL) - mobility_mg(&colorflippos, NULL, NULL) - 30 + 780 * (safe_check(pos, NULL, 3) > 0 ? 1 : 0) + 880 * (safe_check(pos, NULL, 2) > 0 ? 1 : 0) + 435 * (safe_check(pos, NULL, 1) > 0 ? 1 : 0) + 790 * (safe_check(pos, NULL, 0) > 0 ? 1 : 0);
     if (v > 0) {
         return v;
     }
@@ -329,14 +329,14 @@ double safe_check (Pos* pos, Square* square, void* param) {
     if (!check(pos, square, type)) {
         return 0;
     }
-    Pos* pos2 = colorflip(pos);
+    Pos pos2;
+    colorflip(pos, &pos2);
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    if ((!attack(pos2, &temp, NULL) || (weak_squares(pos, square, NULL) && attack(pos, square, NULL) > 1)) && (type != 3 || !queen_attack(pos2, &temp, NULL))) {
+    if ((!attack(&pos2, &temp, NULL) || (weak_squares(pos, square, NULL) && attack(pos, square, NULL) > 1)) && (type != 3 || !queen_attack(&pos2, &temp, NULL))) {
         return 1;
     }
-    free(pos2);
     return 0;
 }
 
@@ -425,21 +425,21 @@ double weak_squares (Pos* pos, Square* square, void* param) {
         return sum(pos, weak_squares, NULL);
     }
     if (attack(pos, square, NULL)) {
-        Pos* pos2 = colorflip(pos);
+        Pos pos2;
+        colorflip(pos, &pos2);
         Square temp;
         temp.x = square->x;
         temp.y = 7-square->y;
-        double a = attack(pos2, &temp, NULL);
+        double a = attack(&pos2, &temp, NULL);
         if (attack >= 2) {
             return 0;
         }
         if (attack == 0) {
             return 1;
         }
-        if (king_attack(pos2, &temp, NULL) || queen_attack(pos2, &temp, NULL)) {
+        if (king_attack(&pos2, &temp, NULL) || queen_attack(&pos2, &temp, NULL)) {
             return 1;
         }
-        free(pos2);
     }
     return 0;
 }
@@ -453,8 +453,9 @@ double unsafe_checks (Pos* pos, Square* square, void* param) {
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    Pos* colorflippos = colorflip(pos);
-    if (pinned_direction(colorflippos, &temp, NULL)) {
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (pinned_direction(&colorflippos, &temp, NULL)) {
         return 1;
     }
     if (!mobility_area(pos, square, NULL)) {
@@ -472,7 +473,6 @@ double unsafe_checks (Pos* pos, Square* square, void* param) {
     if (check(pos, square, &type) && safe_check(pos, NULL, &type) == 0) {
         return 1;
     }
-    free(colorflippos);
     return 0;
 }
 

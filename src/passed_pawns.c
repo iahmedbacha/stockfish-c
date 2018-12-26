@@ -121,7 +121,8 @@ double passed_block (Pos* pos, Square* square, void* param) {
     double r = rank(pos, square, NULL) - 1;
     int a[8] = {0,0,0,3,7,11,20,0};
     int rr = a[(int) r];
-    Pos* pos2 = colorflip(pos);
+    Pos pos2;
+    colorflip(pos, &pos2);
     int defended = 0;
     int unsafe = 0;
     int defended1 = 0;
@@ -134,7 +135,7 @@ double passed_block (Pos* pos, Square* square, void* param) {
         }
         temp.x = square->x;
         temp.y = 7-y;
-        if (indexOf("pnbrqk", 6, board(pos, square->x, y)) >= 0 || attack(pos2, &temp, NULL)) {
+        if (indexOf("pnbrqk", 6, board(pos, square->x, y)) >= 0 || attack(&pos2, &temp, NULL)) {
             unsafe++;
         }
         if (y == square->y - 1) {
@@ -154,7 +155,6 @@ double passed_block (Pos* pos, Square* square, void* param) {
         }
     }
     double k = (unsafe == 0 ? 20: unsafe1 == 0 ? 9 : 0) + (defended == square->y ? 6 : defended1 != 0 ? 4 : 0);
-    free(pos2);
     return k * rr;
 }
 

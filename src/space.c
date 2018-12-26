@@ -34,9 +34,9 @@ double space_area (Pos* pos, Square* square, void* param) {
 }
 
 double space (Pos* pos, Square* square) {
-    Pos* colorflippos = colorflip(pos);
-    if (non_pawn_material(pos, NULL, NULL) + non_pawn_material(colorflippos, NULL, NULL) < 12222) {
-        free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (non_pawn_material(pos, NULL, NULL) + non_pawn_material(&colorflippos, NULL, NULL) < 12222) {
         return 0;
     }
     double weight = 0;
@@ -54,6 +54,5 @@ double space (Pos* pos, Square* square) {
             weight -= 2;
         }
     }
-    free(colorflippos);
     return space_area(pos, NULL, NULL) * weight * weight / 16;
 }

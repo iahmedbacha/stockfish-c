@@ -38,12 +38,12 @@ double initiative (Pos* pos, Square* square) {
         if (open[0] + open[1] == 1) asymmetry++;
         if (open[0] + open[1] > 0) flanks[x < 4 ? 0 : 1] = 1;
     }
-    Pos* pos2 = colorflip(pos);
-    asymmetry += candidate_passed(pos, NULL, NULL) + candidate_passed(pos2, NULL, NULL);
+    Pos pos2;
+    colorflip(pos, &pos2);
+    asymmetry += candidate_passed(pos, NULL, NULL) + candidate_passed(&pos2, NULL, NULL);
     double bothFlanks = flanks[0] && flanks[1] ? 1 : 0;
     double kingDistance = fabs(kx[0] - kx[1]) - fabs(ky[0] - ky[1]);
-    double purePawn = (non_pawn_material(pos, NULL, NULL) + non_pawn_material(pos2, NULL, NULL)) == 0 ? 1 : 0;
-    free(pos2);
+    double purePawn = (non_pawn_material(pos, NULL, NULL) + non_pawn_material(&pos2, NULL, NULL)) == 0 ? 1 : 0;
     return 8 * asymmetry + 12 * pawns + 12 * kingDistance + 16 * bothFlanks + 48 * purePawn - 118;
 }
 

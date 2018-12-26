@@ -85,8 +85,9 @@ double opposite_bishops (Pos* pos, Square* square) {
     if (bishop_count(pos,NULL,NULL)!=1) {
         return 0;
     }
-    Pos* colorflippos = colorflip(pos);
-    if (bishop_count(colorflippos,NULL,NULL)!=1) {
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (bishop_count(&colorflippos,NULL,NULL)!=1) {
         return 0;
     }
     int color[2] = {0, 0};
@@ -100,7 +101,6 @@ double opposite_bishops (Pos* pos, Square* square) {
             }
         }
     }
-    free(colorflippos);
     return color[0] == color[1] ? 0 : 1;
 }
 

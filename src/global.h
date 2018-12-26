@@ -18,7 +18,7 @@ typedef struct {
 }Square;
 
 char board (Pos* pos, int x, int y);
-Pos* colorflip (Pos* pos);
+void colorflip (Pos* pos, Pos* colorflippos);
 double sum (Pos* pos, double (*func) (Pos* pos, Square* square, void* param), void* param);
 
 int indexOf (char* str, int length, char ch);

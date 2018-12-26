@@ -30,12 +30,11 @@ double safe_pawn (Pos* pos, Square* square, void* param) {
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    Pos* colorflippos = colorflip(pos);
-    if (!attack(colorflippos, &temp, NULL)) {
-        free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (!attack(&colorflippos, &temp, NULL)) {
         return 1;
     }
-    free (colorflippos);
     return 0;
 }
 
@@ -80,12 +79,11 @@ double weak_enemies (Pos* pos, Square* square, void* param) {
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    Pos* colorflippos = colorflip(pos);
-    if (attack(pos, square, NULL) <= 1 && attack(colorflippos, &temp, NULL) > 1) {
-        free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (attack(pos, square, NULL) <= 1 && attack(&colorflippos, &temp, NULL) > 1) {
         return 0;
     }
-    free(colorflippos);
     return 1;
 }
 
@@ -103,12 +101,11 @@ double minor_threat (Pos* pos, Square* square, void* param) {
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    Pos* colorflippos = colorflip(pos);
-    if ((board(pos, square->x, square->y) == 'p' || !(board(pos, square->x - 1, square->y - 1) == 'p' || board(pos, square->x + 1, square->y - 1) == 'p' || (attack(pos, square, NULL) <= 1 && attack(colorflippos, &temp, NULL) > 1))) && !weak_enemies(pos, square, NULL)) {
-        free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if ((board(pos, square->x, square->y) == 'p' || !(board(pos, square->x - 1, square->y - 1) == 'p' || board(pos, square->x + 1, square->y - 1) == 'p' || (attack(pos, square, NULL) <= 1 && attack(&colorflippos, &temp, NULL) > 1))) && !weak_enemies(pos, square, NULL)) {
         return 0;
     }
-    free(colorflippos);
     return type + 1;
 }
 
@@ -139,12 +136,11 @@ double hanging (Pos* pos, Square* square, void* param) {
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    Pos* colorflippos = colorflip(pos);
-    if (attack(colorflippos, &temp, NULL)) {
-        free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (attack(&colorflippos, &temp, NULL)) {
         return 0;
     }
-    free(colorflippos);
     return 1;
 }
 
@@ -178,17 +174,16 @@ double pawn_push_threat (Pos* pos, Square* square, void* param) {
         temp1.y = square->y+1;
         temp2.x = square->x+ix;
         temp2.y = 6-square->y;
-        Pos* colorflippos = colorflip(pos);
-        if (board(pos, square->x + ix, square->y + 2) == 'P' && board(pos, square->x + ix, square->y + 1) == '-' && board(pos, square->x + ix - 1, square->y) != 'p' && board(pos, square->x + ix + 1, square->y) != 'p' && (attack(pos, &temp1, NULL) || !attack(colorflippos, &temp2, NULL))) {
-            free(colorflippos);
+        Pos colorflippos;
+        colorflip(pos, &colorflippos);
+        if (board(pos, square->x + ix, square->y + 2) == 'P' && board(pos, square->x + ix, square->y + 1) == '-' && board(pos, square->x + ix - 1, square->y) != 'p' && board(pos, square->x + ix + 1, square->y) != 'p' && (attack(pos, &temp1, NULL) || !attack(&colorflippos, &temp2, NULL))) {
             return 1;
         }
         temp1.x = square->x+ix;
         temp1.y = square->y+1;
         temp2.x = square->x+ix;
         temp2.y = 6-square->y;
-        if (square->y == 3 && board(pos, square->x + ix, square->y + 3) == 'P' && board(pos, square->x + ix, square->y + 2) == '-' && board(pos, square->x + ix, square->y + 1) == '-' && board(pos, square->x + ix - 1, square->y) != 'p' && board(pos, square->x + ix + 1, square->y) != 'p' && (attack(pos, &temp1, NULL) || !attack(colorflippos, &temp2, NULL))) {
-            free(colorflippos);
+        if (square->y == 3 && board(pos, square->x + ix, square->y + 3) == 'P' && board(pos, square->x + ix, square->y + 2) == '-' && board(pos, square->x + ix, square->y + 1) == '-' && board(pos, square->x + ix - 1, square->y) != 'p' && board(pos, square->x + ix + 1, square->y) != 'p' && (attack(pos, &temp1, NULL) || !attack(&colorflippos, &temp2, NULL))) {
             return 1;
         }
     }
@@ -206,12 +201,11 @@ double weak_unopposed_pawn (Pos* pos, Square* square, void* param) {
     if (square == NULL) {
         return sum(pos, weak_unopposed_pawn, NULL);
     }
-    Pos* colorflippos = colorflip(pos);
-    if (rook_count(colorflippos, NULL, NULL) + queen_count(colorflippos, NULL, NULL) == 0) {
-        free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (rook_count(&colorflippos, NULL, NULL) + queen_count(&colorflippos, NULL, NULL) == 0) {
         return 0;
     }
-    free(colorflippos);
     if (opposed(pos, square, NULL)) {
         return 0;
     }
@@ -238,12 +232,11 @@ double overload (Pos* pos, Square* square, void* param) {
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    Pos* colorflippos = colorflip(pos);
-    if (!attack(colorflippos, &temp, NULL)) {
-        free(colorflippos);
+    Pos colorflippos;
+    colorflip(pos, &colorflippos);
+    if (!attack(&colorflippos, &temp, NULL)) {
         return 0;
     }
-    free(colorflippos);
     return 1;
 }
 
@@ -251,12 +244,11 @@ double slider_on_queen (Pos* pos, Square* square, void* param) {
     if (square == NULL) {
         return sum(pos, slider_on_queen, NULL);
     }
-    Pos* pos2 = colorflip(pos);
-    if (queen_count(pos2, NULL, NULL) != 1) {
-        free(pos2);
+    Pos pos2;
+    colorflip(pos, &pos2);
+    if (queen_count(&pos2, NULL, NULL) != 1) {
         return 0;
     }
-    free(pos2);
     if (board(pos, square->x - 1, square->y - 1) == 'p') {
         return 0;
     }
@@ -272,11 +264,11 @@ double slider_on_queen (Pos* pos, Square* square, void* param) {
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    double diagonal = queen_attack_diagonal(pos2, &temp, NULL);
+    double diagonal = queen_attack_diagonal(&pos2, &temp, NULL);
     if (diagonal && bishop_xray_attack(pos, square, NULL)) {
         return 1;
     }
-    if (!diagonal && rook_xray_attack(pos, square, NULL) && queen_attack(pos2, &temp, NULL)) {
+    if (!diagonal && rook_xray_attack(pos, square, NULL) && queen_attack(&pos2, &temp, NULL)) {
         return 1;
     }
     return 0;
@@ -286,14 +278,14 @@ double knight_on_queen (Pos* pos, Square* square, void* param) {
     if (square == NULL) {
         return sum(pos, knight_on_queen, NULL);
     }
-    Pos* pos2 = colorflip(pos);
+    Pos pos2;
+    colorflip(pos, &pos2);
     int qx = -1;
     int qy = -1;
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
             if (board(pos, x, y) == 'q') {
                 if (qx >= 0 || qy >= 0) {
-                    free(pos2);
                     return 0;
                 }
                 qx = x;
@@ -301,26 +293,21 @@ double knight_on_queen (Pos* pos, Square* square, void* param) {
             }
         }
     }
-    if (queen_count(pos2, NULL, NULL) != 1) {
-        free(pos2);
+    if (queen_count(&pos2, NULL, NULL) != 1) {
         return 0;
     }
     if (board(pos, square->x - 1, square->y - 1) == 'p') {
-        free(pos2);
         return 0;
     }
     if (board(pos, square->x + 1, square->y - 1) == 'p') {
-        free(pos2);
         return 0;
     }
     Square temp;
     temp.x = square->x;
     temp.y = 7-square->y;
-    if (attack(pos, square, NULL) <= 1 && attack(pos2, &temp, NULL) > 1) {
-        free(pos2);
+    if (attack(pos, square, NULL) <= 1 && attack(&pos2, &temp, NULL) > 1) {
         return 0;
     }
-    free(pos2);
     if (!mobility_area(pos, square, NULL)) {
         return 0;
     }
