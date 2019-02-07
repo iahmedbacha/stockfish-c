@@ -129,7 +129,7 @@ int num_coup = 0;
 int count = 0;
 
 // profondeur initiale d'exploration préliminaire avant le tri des alternatives
-int h0 = 1;
+int h0 = 2;
 
 // tableau des fonctions d'estimations
 int (*Est[10])(struct config *);
@@ -194,7 +194,7 @@ int main( int argc, char *argv[] )
    estMax--;
    estMin--;
 
-   hauteur = 2;  	// par défaut on fixe la profondeur d'évaluation à 4
+   hauteur = 4;  	// par défaut on fixe la profondeur d'évaluation à 4
    largeur = +INFINI;	// et la largeur à l'infini (c-a-d le nb d'alternatives à chaque coup)
 
    // sinon on peut les récupérer depuis la ligne de commande
