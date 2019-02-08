@@ -19,8 +19,6 @@
 
 char board (Pos* pos, int x, int y) {
     if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
-        if (pos==NULL) {
-        }
         return pos->b[x][y];
     }
 }

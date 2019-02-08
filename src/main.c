@@ -129,7 +129,7 @@ int num_coup = 0;
 int count = 0;
 
 // profondeur initiale d'exploration préliminaire avant le tri des alternatives
-int h0 = 2;
+int h0 = 1;
 
 // tableau des fonctions d'estimations
 int (*Est[10])(struct config *);
@@ -194,7 +194,7 @@ int main( int argc, char *argv[] )
    estMax--;
    estMin--;
 
-   hauteur = 4;  	// par défaut on fixe la profondeur d'évaluation à 4
+   hauteur = 2;  	// par défaut on fixe la profondeur d'évaluation à 4
    largeur = +INFINI;	// et la largeur à l'infini (c-a-d le nb d'alternatives à chaque coup)
 
    // sinon on peut les récupérer depuis la ligne de commande
@@ -1603,6 +1603,9 @@ int minmax_ab( struct config *conf, int mode, int niv, int alpha, int beta, int 
 
 	   score = alpha;
 	   for ( i=0; i<n; i++ ) {
+        if ((numFctEst==6)&&(score > num_coup/10)) {
+            break;
+        }
    	    	score2 = minmax_ab( &T[i], MIN, niv-1, score, beta, largeur, numFctEst);
 		if (score2 > score) score = score2;
 		if (score >= beta) {
@@ -1626,6 +1629,9 @@ int minmax_ab( struct config *conf, int mode, int niv, int alpha, int beta, int 
 
 	   score = beta;
 	   for ( i=0; i<n; i++ ) {
+        if ((numFctEst==6)&&(score < -num_coup/10)) {
+            break;
+        }
    	    	score2 = minmax_ab( &T[i], MAX, niv-1, alpha, score, largeur, numFctEst );
 		if (score2 < score) score = score2;
 		if (score <= alpha) {
@@ -1633,6 +1639,7 @@ int minmax_ab( struct config *conf, int mode, int niv, int alpha, int beta, int 
 			nbAlpha++;	// compteur de courpes alpha
    	      		return alpha;
 	    	}
+
 	   }
 	}
 
