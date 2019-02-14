@@ -224,7 +224,8 @@ int main( int argc, char *argv[] )
    num_coup = 0;
 
    // initialise le générateur de nombre aléatoire pour la fonction estim3(...) uniquement
-   //srandom( time(NULL) );
+   srandom( time(NULL) );
+   //srand( time(NULL) ); // l'équivalent de srandom() dans Windows
 
    printf("Donnez le nom du fichier texte où sera sauvegarder la partie : ");
    scanf(" %s", nomf);
@@ -758,7 +759,8 @@ int estim3( struct config *conf )
 	ScrQte = ( (pionB*2 + cfB*6 + tB*8 + nB*20) - (pionN*2 + cfN*6 + tN*8 + nN*20) );
 	// donc ScrQteMax ==> 76
 
-	//Score = (10*ScrQte + random()%10) * 100.0 / (10*76+10);
+	Score = (10*ScrQte + random()%10) * 100.0 / (10*76+10);
+	//Score = (10*ScrQte + rand()%10) * 100.0 / (10*76+10); // l'équivalent de random() dans Windows
 	// pour les poids des pièces et le facteur multiplicatif voir commentaire dans estim1
 
         if (Score > 98 ) Score = 98;
