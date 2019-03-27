@@ -3,13 +3,13 @@
 
 ### CodeBlocks ###
 # specific to CodeBlocks IDE
-src/*.layout
-src/*.depend
+*.layout
+*.depend
 # generated directories
 src/bin/
 src/obj/
 
 ### Output files ###
-src/*.txt
+*.txt
 
 # End of https://www.gitignore.io/api/codeblocks
