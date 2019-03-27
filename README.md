@@ -1,4 +1,4 @@
-# StockfishC
+# Stockfish C
 ## Overview
 Stockfish main evaluation in C.
 ## Files
