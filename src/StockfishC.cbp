@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="StockfishC" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/StockfishEvalC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/StockfishEvalC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="attack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="attack.h" />
+		<Unit filename="eval.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="eval.h" />
+		<Unit filename="global.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="global.h" />
+		<Unit filename="helpers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="helpers.h" />
+		<Unit filename="imbalance.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="imbalance.h" />
+		<Unit filename="initiative.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="initiative.h" />
+		<Unit filename="king.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="king.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="material.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="material.h" />
+		<Unit filename="mobility.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mobility.h" />
+		<Unit filename="passed_pawns.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="passed_pawns.h" />
+		<Unit filename="pawns.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pawns.h" />
+		<Unit filename="pieces.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pieces.h" />
+		<Unit filename="space.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="space.h" />
+		<Unit filename="threats.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="threats.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
